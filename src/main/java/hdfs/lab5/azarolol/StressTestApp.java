@@ -14,6 +14,7 @@ import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.concurrent.CompletionStage;
 
 public class StressTestApp {
@@ -26,6 +27,7 @@ public class StressTestApp {
     private static final String QUERY_PATH = "testUrl";
     private static final String QUERY_COUNT = "count";
     private static final int PARALLELISM_NUMBER = 20;
+    private static final long DURATION_TIME = 
 
     public static void main(String[] args) throws IOException {
         System.out.println(WELCOME_MESSAGE);
@@ -57,8 +59,8 @@ public class StressTestApp {
                     Patterns.ask(
                             system,
                             new GetResultMessage(request.first()),
-                            
-
+                            Duration.ofMillis(DURATION_TIME))
+                            .thenCompose(
                     )
                 })
         )
