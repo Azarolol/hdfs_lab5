@@ -14,6 +14,7 @@ import akka.japi.Pair;
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import akka.stream.javadsl.Keep;
 import akka.stream.javadsl.Sink;
 import org.asynchttpclient.AsyncHttpClient;
 import org.asynchttpclient.Dsl;
@@ -85,6 +86,7 @@ public class StressTestApp {
     }
 
     private static Sink<Pair<String, Integer>, CompletionStage<Long>> createSink() {
+        
         return Flow.<Pair<String, Integer>>create()
                 .mapConcat(request ->
                         new ArrayList<>(Collections.nCopies(request.second(), request.first())))
@@ -96,6 +98,6 @@ public class StressTestApp {
                         return CompletableFuture.completedFuture(System.currentTimeMillis() - currentTime);
                     });
                 })
-                .toMat()
+                .toMat(fold, Keep.right());
     }
 }
