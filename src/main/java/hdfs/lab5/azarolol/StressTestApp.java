@@ -87,7 +87,9 @@ public class StressTestApp {
                                 }
                             })})
                 .map(result ->
-                        storage.tell())
+                        storage.tell(
+                                new SaveResultMessage
+                        ))
     }
 
     private static Sink<Pair<String, Integer>, CompletionStage<Long>> createSink() {
