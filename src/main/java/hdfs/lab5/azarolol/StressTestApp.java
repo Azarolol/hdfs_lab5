@@ -96,7 +96,7 @@ public class StressTestApp {
 
     private static Sink<Pair<String, Integer>, CompletionStage<Long>> createSink() {
         Sink<Integer, CompletionStage<Long>> fold = Sink.fold(
-                0L, (Function2<Long, Integer, Long>) Long::sum
+                new SaveResultMessage("", 0L), 
         );
         return Flow.<Pair<String, Integer>>create()
                 .mapConcat(request ->
