@@ -1,7 +1,9 @@
 package hdfs.lab5.azarolol;
 
 import akka.NotUsed;
+import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
+import akka.actor.Props;
 import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.ServerBinding;
@@ -32,9 +34,10 @@ public class StressTestApp {
     public static void main(String[] args) throws IOException {
         System.out.println(WELCOME_MESSAGE);
         ActorSystem system = ActorSystem.create(ACTOR_SYSTEM_NAME);
+        ActorRef storage = system.actorOf(Props.create(StorageActor.class));
         final Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
-        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = createFlow(http, system, materializer);
+        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = createFlow(http, storage, materializer);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                 routeFlow,
                 ConnectHttp.toHost(HOST_NAME, PORT),
@@ -47,7 +50,7 @@ public class StressTestApp {
                 .thenAccept(unbound -> system.terminate());
     }
 
-    private static Flow<HttpRequest,HttpResponse,NotUsed> createFlow(Http http, ActorSystem system, ActorMaterializer materializer) {
+    private static Flow<HttpRequest,HttpResponse,NotUsed> createFlow(Http http, ActorRef storage, ActorMaterializer materializer) {
         return Flow.of(HttpRequest.class).map(
                 request -> {
                     Query query = request.getUri().query();
@@ -57,7 +60,7 @@ public class StressTestApp {
                 })
                 .mapAsync(PARALLELISM_NUMBER, request -> {
                     Patterns.ask(
-                            system,
+                            storage,
                             new GetResultMessage(request.first()),
                             Duration.ofMillis(DURATION_TIME))
                             .thenCompose(
