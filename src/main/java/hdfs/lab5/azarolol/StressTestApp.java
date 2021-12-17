@@ -9,6 +9,7 @@ import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.http.javadsl.model.Query;
 import akka.japi.Pair;
+import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 
@@ -53,7 +54,11 @@ public class StressTestApp {
                     return new Pair<>(path, count);
                 })
                 .mapAsync(PARALLELISM_NUMBER, request -> {
-                    
+                    Patterns.ask(
+                            system,
+                            new GetResultMessage(request.first()),
+                            
+                    )
                 })
         )
     }
