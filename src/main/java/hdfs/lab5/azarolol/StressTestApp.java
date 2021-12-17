@@ -53,7 +53,7 @@ public class StressTestApp {
                     return new Pair<>(path, count);
                 })
                 .mapAsync(PARALLELISM_NUMBER, request -> {
-
+                    
                 })
         )
     }
