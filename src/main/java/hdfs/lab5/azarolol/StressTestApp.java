@@ -16,6 +16,7 @@ import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 import akka.stream.javadsl.Sink;
 import org.asynchttpclient.AsyncHttpClient;
+import org.asynchttpclient.Dsl;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -87,7 +88,7 @@ public class StressTestApp {
                         new ArrayList<>(Collections.nCopies(request.second(), request.first())))
                 .mapAsync(PARALLELISM_NUMBER, path -> {
                     long currentTime = System.currentTimeMillis();
-                    
+                    Dsl.get()
                 })
     }
 }
