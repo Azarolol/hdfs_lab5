@@ -85,6 +85,13 @@ public class StressTestApp {
                                         .thenApply(result -> new Pair<>(request.first(), result / request.second()));
                             }
                         }))
+                .map(response -> {
+                    storage.tell(
+                            new SaveResultMessage(response.first(), response.second()),
+                            ActorRef.noSender()
+                    );
+                    return HttpResponse.create().withEntity(response.first() + " " + response.second().toString());
+                });
     }
 
     private static Sink<Pair<String, Integer>, CompletionStage<Long>> createSink() {
