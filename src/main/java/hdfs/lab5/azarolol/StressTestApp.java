@@ -104,6 +104,7 @@ public class StressTestApp {
                     CompletableFuture<Response> response = Dsl.asyncHttpClient().executeRequest(request).toCompletableFuture();
                     return response.thenCompose(res -> CompletableFuture.completedFuture(System.currentTimeMillis() - currentTime));
                 })
-                .toMat(fold, Keep.right());
+                .fold(0L, Long::sum)
+                .toMat(, Keep.right());
     }
 }
