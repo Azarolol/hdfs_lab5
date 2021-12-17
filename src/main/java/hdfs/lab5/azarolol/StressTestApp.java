@@ -70,25 +70,24 @@ public class StressTestApp {
                     int count = Integer.parseInt(query.get(QUERY_COUNT).get());
                     return new Pair<>(path, count);
                 })
-                .mapAsync(PARALLELISM_NUMBER, request -> {
-                    Patterns.ask(
-                            storage,
-                            new GetResultMessage(request.first()),
-                            Duration.ofMillis(DURATION_TIME))
-                            .thenCompose(response -> {
-                                if (((Optional<Long>) response).isPresent()) {
-                                    return CompletableFuture.completedFuture(((Optional<?>) response).get());
-                                } else {
-                                    Sink<Pair<String, Integer>, CompletionStage<Long>> testSink = createSink();
-                                    return Source.from(Collections.singletonList(request))
-                                            .toMat(testSink, Keep.right())
-                                            .run(materializer)
-                                            .thenApply(result -> new Pair<>(request.first(), result / request.second()));
-                                }
-                            })})
+                .mapAsync(PARALLELISM_NUMBER, request -> Patterns.ask(
+                        storage,
+                        new GetResultMessage(request.first()),
+                        Duration.ofMillis(DURATION_TIME))
+                        .thenCompose(response -> {
+                            if (((Optional<Long>) response).isPresent()) {
+                                return CompletableFuture.completedFuture(((Optional<?>) response).get());
+                            } else {
+                                Sink<Pair<String, Integer>, CompletionStage<Long>> testSink = createSink();
+                                return Source.from(Collections.singletonList(request))
+                                        .toMat(testSink, Keep.right())
+                                        .run(materializer)
+                                        .thenApply(result -> new Pair<>(request.first(), result / request.second()));
+                            }
+                        }))
                 .map(result -> {
                         storage.tell(
-                                new SaveResultMessage(result.first(), 
+                                new SaveResultMessage(result.
                         ))
                 }
     }
