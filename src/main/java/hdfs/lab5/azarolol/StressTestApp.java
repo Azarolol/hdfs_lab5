@@ -63,7 +63,9 @@ public class StressTestApp {
                             storage,
                             new GetResultMessage(request.first()),
                             Duration.ofMillis(DURATION_TIME))
-                            .thenCompose(
+                            .thenCompose(response -> {
+                                
+                            }
                     )
                 })
         )
