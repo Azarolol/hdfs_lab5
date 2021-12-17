@@ -80,6 +80,7 @@ public class StressTestApp {
 
     private static Sink<Pair<String, Integer>, CompletionStage<Float>> createSink() {
         return Flow.<Pair<String, Integer>>create()
-                .mapConcat()
+                .mapConcat(request ->
+                        )
     }
 }
