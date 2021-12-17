@@ -4,6 +4,7 @@ import akka.actor.AbstractActor;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class StorageActor extends AbstractActor {
 
@@ -15,7 +16,7 @@ public class StorageActor extends AbstractActor {
                 .match(
                         GetResultMessage.class,
                         message -> sender().tell(
-                                storage.get(message.getPath()),
+                                Optional.ofNullable(storage.get(message.getPath())),
                                 self())
                 )
                 .match(
