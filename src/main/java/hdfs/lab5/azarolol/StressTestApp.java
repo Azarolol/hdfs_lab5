@@ -85,9 +85,9 @@ public class StressTestApp {
                                         .thenApply(result -> new Pair<>(request.first(), result / request.second()));
                             }
                         }))
-                .map(result -> {
+                .map(res -> {
                         storage.tell(
-                                new SaveResultMessage(result.
+                                new SaveResultMessage(res
                         ))
                 }
     }
