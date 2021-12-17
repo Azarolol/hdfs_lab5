@@ -17,6 +17,7 @@ import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 import akka.stream.javadsl.Keep;
 import akka.stream.javadsl.Sink;
+import akka.stream.javadsl.Source;
 import org.asynchttpclient.AsyncHttpClient;
 import org.asynchttpclient.Dsl;
 import org.asynchttpclient.Request;
@@ -79,11 +80,15 @@ public class StressTestApp {
                                     return CompletableFuture.completedFuture(((Optional<?>) response).get());
                                 } else {
                                     Sink<Pair<String, Integer>, CompletionStage<Long>> testSink = createSink();
-                                    
+                                    return Source.from(Collections.singletonList(request))
+                                            .toMat(testSink, Keep.right())
+                                            .run(materializer)
+                                            .thenApply(result -> new Pair<>(request.first(), result / request.second()));
                                 }
                             }
                     )
                 })
+
         )
     }
 
