@@ -84,6 +84,6 @@ public class StressTestApp {
         return Flow.<Pair<String, Integer>>create()
                 .mapConcat(request ->
                         new ArrayList<>(Collections.nCopies(request.second(), request.first())))
-                .map
+                .mapAsync()
     }
 }
