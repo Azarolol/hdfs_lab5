@@ -105,6 +105,6 @@ public class StressTestApp {
                     return response.thenCompose(res -> CompletableFuture.completedFuture(System.currentTimeMillis() - currentTime));
                 })
                 .fold(0L, Long::sum)
-                .toMat(, Keep.right());
+                .toMat(Sink.head(), Keep.right());
     }
 }
