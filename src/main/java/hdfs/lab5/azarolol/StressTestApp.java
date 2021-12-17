@@ -88,7 +88,7 @@ public class StressTestApp {
                             })})
                 .map(result ->
                         storage.tell(
-                                new SaveResultMessage
+                                new SaveResultMessage(result.first)
                         ))
     }
 
