@@ -86,7 +86,8 @@ public class StressTestApp {
                                             .thenApply(result -> new Pair<>(request.first(), result / request.second()));
                                 }
                             })})
-                .map()
+                .map(result ->
+                        )
     }
 
     private static Sink<Pair<String, Integer>, CompletionStage<Long>> createSink() {
