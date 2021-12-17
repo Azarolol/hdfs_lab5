@@ -14,6 +14,7 @@ import akka.japi.Pair;
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import akka.stream.javadsl.Sink;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -69,11 +70,16 @@ public class StressTestApp {
                                 if (((Optional<Float>) response).isPresent()) {
                                     return CompletableFuture.completedFuture(((Optional<?>) response).get());
                                 } else {
-                                    
+                                    Sink<Pair<String, Integer>, CompletionStage<Float>> testSink = createSink();
                                 }
                             }
                     )
                 })
         )
+    }
+
+    private static Sink<Pair<String, Integer>, CompletionStage<Float>> createSink() {
+        return Flow.<Pair<String, Integer>>create()
+                
     }
 }
