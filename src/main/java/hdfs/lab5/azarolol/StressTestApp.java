@@ -67,7 +67,9 @@ public class StressTestApp {
                             Duration.ofMillis(DURATION_TIME))
                             .thenCompose(response -> {
                                 if (((Optional<Float>) response).isPresent()) {
-                                    return CompletableFuture.completedFuture()
+                                    return CompletableFuture.completedFuture(((Optional<?>) response).get());
+                                } else {
+                                    
                                 }
                             }
                     )
