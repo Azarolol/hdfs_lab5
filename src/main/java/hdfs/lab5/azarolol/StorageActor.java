@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class StorageActor extends AbstractActor {
 
-    private final Map<String, Float> storage = new HashMap<>();
+    private final Map<String, Long> storage = new HashMap<>();
 
     @Override
     public Receive createReceive() {

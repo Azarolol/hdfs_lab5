@@ -69,10 +69,10 @@ public class StressTestApp {
                             new GetResultMessage(request.first()),
                             Duration.ofMillis(DURATION_TIME))
                             .thenCompose(response -> {
-                                if (((Optional<Float>) response).isPresent()) {
+                                if (((Optional<Long>) response).isPresent()) {
                                     return CompletableFuture.completedFuture(((Optional<?>) response).get());
                                 } else {
-                                    Sink<Pair<String, Integer>, CompletionStage<Float>> testSink = createSink();
+                                    Sink<Pair<String, Integer>, CompletionStage<Long>> testSink = createSink();
                                 }
                             }
                     )
@@ -80,7 +80,7 @@ public class StressTestApp {
         )
     }
 
-    private static Sink<Pair<String, Integer>, CompletionStage<Float>> createSink() {
+    private static Sink<Pair<String, Integer>, CompletionStage<Long>> createSink() {
         return Flow.<Pair<String, Integer>>create()
                 .mapConcat(request ->
                         new ArrayList<>(Collections.nCopies(request.second(), request.first())))
