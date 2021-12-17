@@ -15,6 +15,7 @@ import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 import akka.stream.javadsl.Sink;
+import org.asynchttpclient.AsyncHttpClient;
 
 import java.io.IOException;
 import java.time.Duration;
