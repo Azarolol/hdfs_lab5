@@ -84,6 +84,9 @@ public class StressTestApp {
         return Flow.<Pair<String, Integer>>create()
                 .mapConcat(request ->
                         new ArrayList<>(Collections.nCopies(request.second(), request.first())))
-                .mapAsync(PARALLELISM_NUMBER, )
+                .mapAsync(PARALLELISM_NUMBER, path -> {
+                    long currentTime = System.currentTimeMillis();
+                    
+                })
     }
 }
