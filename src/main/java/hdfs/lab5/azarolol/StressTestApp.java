@@ -11,6 +11,7 @@ import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
 import akka.http.javadsl.model.Query;
 import akka.japi.Pair;
+import akka.japi.function.Function2;
 import akka.pattern.Patterns;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
@@ -87,8 +88,8 @@ public class StressTestApp {
 
     private static Sink<Pair<String, Integer>, CompletionStage<Long>> createSink() {
         Sink<Integer, CompletionStage<Long>> fold = Sink.fold(
-                0L, 
-        )
+                0L, (Function2<Long, Integer, Long>) Long::sum
+        );
         return Flow.<Pair<String, Integer>>create()
                 .mapConcat(request ->
                         new ArrayList<>(Collections.nCopies(request.second(), request.first())))
