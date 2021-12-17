@@ -58,6 +58,7 @@ public class StressTestApp {
                             system,
                             new GetResultMessage(request.first()),
                             
+
                     )
                 })
         )
