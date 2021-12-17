@@ -18,6 +18,7 @@ import akka.stream.javadsl.Flow;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 public class StressTestApp {
@@ -66,7 +67,7 @@ public class StressTestApp {
                             Duration.ofMillis(DURATION_TIME))
                             .thenCompose(response -> {
                                 if (((Optional<Float>) response).isPresent()) {
-                                    return 
+                                    return CompletableFuture.completedFuture()
                                 }
                             }
                     )
