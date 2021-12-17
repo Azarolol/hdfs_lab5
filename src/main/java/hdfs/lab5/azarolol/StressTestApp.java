@@ -85,8 +85,8 @@ public class StressTestApp {
                                             .run(materializer)
                                             .thenApply(result -> new Pair<>(request.first(), result / request.second()));
                                 }
-                            })
-                });
+                            })})
+                .map()
     }
 
     private static Sink<Pair<String, Integer>, CompletionStage<Long>> createSink() {
