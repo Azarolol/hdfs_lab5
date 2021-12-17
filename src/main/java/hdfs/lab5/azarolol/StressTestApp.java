@@ -85,7 +85,7 @@ public class StressTestApp {
                                             .run(materializer)
                                             .thenApply(result -> new Pair<>(request.first(), result / request.second()));
                                 }
-                            });
+                            })
                 });
     }
 
