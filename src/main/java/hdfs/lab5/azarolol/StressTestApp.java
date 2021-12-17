@@ -18,6 +18,8 @@ import akka.stream.javadsl.Sink;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
@@ -81,6 +83,7 @@ public class StressTestApp {
     private static Sink<Pair<String, Integer>, CompletionStage<Float>> createSink() {
         return Flow.<Pair<String, Integer>>create()
                 .mapConcat(request ->
-                        )
+                        new ArrayList<>(Collections.nCopies(request.second(), request.first())))
+                .map
     }
 }
