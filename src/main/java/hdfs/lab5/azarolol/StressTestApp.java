@@ -79,6 +79,7 @@ public class StressTestApp {
                                     return CompletableFuture.completedFuture(((Optional<?>) response).get());
                                 } else {
                                     Sink<Pair<String, Integer>, CompletionStage<Long>> testSink = createSink();
+                                    
                                 }
                             }
                     )
