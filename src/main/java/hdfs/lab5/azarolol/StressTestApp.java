@@ -76,7 +76,7 @@ public class StressTestApp {
                         Duration.ofMillis(DURATION_TIME))
                         .thenCompose(response -> {
                             if (((Optional<Long>) response).isPresent()) {
-                                return CompletableFuture.completedFuture(new Pair<>(request.first(), ((Optional<Long>) response).get());
+                                return CompletableFuture.completedFuture(new Pair<>(request.first(), ((Optional<Long>) response).get()));
                             } else {
                                 Sink<Pair<String, Integer>, CompletionStage<Long>> testSink = createSink();
                                 return Source.from(Collections.singletonList(request))
