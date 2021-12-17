@@ -27,7 +27,7 @@ public class StressTestApp {
     private static final String QUERY_PATH = "testUrl";
     private static final String QUERY_COUNT = "count";
     private static final int PARALLELISM_NUMBER = 20;
-    private static final long DURATION_TIME = 
+    private static final long DURATION_TIME = 1000;
 
     public static void main(String[] args) throws IOException {
         System.out.println(WELCOME_MESSAGE);
